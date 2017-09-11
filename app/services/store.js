@@ -3,7 +3,7 @@ import props from 'rsyncy-app/util/lookup-computed-properties';
 
 const {
   inject: { service },
-  RSVP: { all },
+  RSVP: { resolve, all },
   computed,
   getOwner
 } = Ember;
@@ -29,8 +29,21 @@ export default Ember.Service.extend({
     return props(this, (name, meta) => meta._store === true);
   }),
 
+  _load() {
+    return all(this.get('stores').map(store => store.load()));
+  },
+
   load() {
-    return this.get('settings').load().then(() => all(this.get('stores').map(store => store.load())));
-  }
+    return resolve()
+      .then(() => this.get('settings').load())
+      .then(() => this._load())
+      .then(() => this);
+  },
+
+  save() {
+    return resolve()
+      .then(() => this.get('settings').save())
+      .then(() => this);
+  },
 
 });
