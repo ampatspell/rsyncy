@@ -1,20 +1,33 @@
-import DS from 'ember-data';
-
-const {
-  Model,
-  attr,
-  belongsTo
-} = DS;
+import Ember from 'ember';
+import { Model, byId, settings } from './-base';
 
 export default Model.extend({
 
-  name: attr('string'),
+  name:    settings('name'),
+  source:  settings('source'),
+  target:  settings('target'),
+  watch:   settings('watch'),
+  groupId: settings('groupId'),
 
-  source: attr('string'),
-  target: attr('string'),
+  group:   byId('groups', 'groupId'),
 
-  watch: attr('boolean'),
+  isSyncing: false,
 
-  group: belongsTo('group', { async: true, autoSave: true, inverse: 'projects' })
+  sync() {
+    this.set('isSyncing', true);
+    Ember.run.later(() => this.set('isSyncing', false), 3000);
+  },
+
+  didCreate() {
+    console.log('didCreate', this+'');
+  },
+
+  didUpdate() {
+    console.log('didUpdate', this+'');
+  },
+
+  willDelete() {
+    console.log('willDelete', this+'');
+  }
 
 });

@@ -1,12 +1,7 @@
 import Ember from 'ember';
 
-const {
-  inject: { service }
-} = Ember;
-
 export default Ember.Controller.extend({
 
-  watchers: service(),
   checked: true,
 
   actions: {
@@ -21,7 +16,7 @@ export default Ember.Controller.extend({
       project.save();
     },
     syncProject(project) {
-      this.get('watchers').find(project).sync();
+      project.sync();
     }
   }
 

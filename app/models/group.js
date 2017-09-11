@@ -1,14 +1,18 @@
-import DS from 'ember-data';
+import Ember from 'ember';
+import { Model, settings, inverse } from './-base';
 
 const {
-  Model,
-  attr,
-  hasMany
-} = DS;
+  RSVP: { all }
+} = Ember;
 
 export default Model.extend({
 
-  name: attr('string'),
-  projects: hasMany('project', { async: true, dependent: 'destroy', inverse: 'group' })
+  name: settings('name'),
+
+  projects: inverse('projects', 'groupId'),
+
+  willDelete() {
+    return all(this.get('projects').map(project => project.delete()));
+  },
 
 });
