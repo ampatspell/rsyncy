@@ -1,14 +1,4 @@
-import DS from 'ember-data';
-
-const {
-  Model,
-  attr,
-  hasMany
-} = DS;
+import Model from './-base';
 
 export default Model.extend({
-
-  name: attr('string'),
-  projects: hasMany('project', { async: true, dependent: 'destroy', inverse: 'group' })
-
 });
