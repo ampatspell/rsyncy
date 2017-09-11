@@ -19,7 +19,8 @@ app.on('window-all-closed', () => {
 app.on('ready', () => {
   mainWindow = new BrowserWindow({
     width: 340,
-    height: 525
+    height: 525,
+    title: ''
   });
 
   // mainWindow.openDevTools();
