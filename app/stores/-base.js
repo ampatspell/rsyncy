@@ -51,11 +51,17 @@ export default Ember.Object.extend({
   },
 
   _saveModel(model) {
+    model.didUpdate();
     return this.get('settings')._saveModel(model);
   },
 
   __deleteModel(model) {
-    this.get('models').removeObject(model);
+    return resolve()
+      .then(() => model.willDelete())
+      .then(() => this.get('models').removeObject(model));
+  },
+
+  __didDeleteModel(model) {
     model.destroy();
   },
 
@@ -64,6 +70,7 @@ export default Ember.Object.extend({
     return resolve()
       .then(() => this.__deleteModel(model))
       .then(() => this.get('settings')._deleteModel(settings))
+      .then(() => this.__didDeleteModel(model))
       .then(() => undefined);
   }
 

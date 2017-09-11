@@ -16,6 +16,14 @@ export default Model.extend({
   sync() {
     this.set('isSyncing', true);
     Ember.run.later(() => this.set('isSyncing', false), 3000);
+  },
+
+  didUpdate() {
+    console.log('didUpdate', this+'');
+  },
+
+  willDelete() {
+    console.log('willDelete', this+'');
   }
 
 });
