@@ -14,6 +14,7 @@ export const task = fn => {
 
 export const error = fn => {
   return function(...args) {
+    this.set('error', null);
     return resolve(fn.call(this, ...args)).catch(err => this._onError(err));
   }
 }
@@ -63,6 +64,11 @@ export default Ember.Object.extend({
       .finally(() => this.set('isSyncing', false));
   }),
 
+  _stopSyncTask: task(function() {
+    return resolve()
+      .then(() => this.__stopSync())
+  }),
+
   _watchTask: task(function() {
     let watch = this.get('project.watch');
     if(!watch) {
@@ -104,6 +110,7 @@ export default Ember.Object.extend({
   restart: error(function() {
     return resolve()
       .then(() => this._unwatchTask())
+      .then(() => this._stopSyncTask())
       .then(() => this._syncAllTask())
       .then(() => this._watchTask())
       .then(() => this);
@@ -112,6 +119,7 @@ export default Ember.Object.extend({
   stop: error(function() {
     return resolve()
       .then(() => this._unwatchTask())
+      .then(() => this._stopSyncTask())
       .then(() => this.destroy())
       .then(() => undefined);
   })

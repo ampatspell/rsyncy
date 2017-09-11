@@ -11,10 +11,28 @@ const {
 export default Syncer.extend({
 
   watcher: null,
+  rsync: null,
+
+  _create(name) {
+    let syncer = this;
+    return getOwner(this).factoryFor(`platform:syncer/electron/${name}`).create({ syncer });
+  },
 
   _createWatcher() {
-    let syncer = this;
-    return getOwner(this).factoryFor('platform:syncer/electron/watcher').create({ syncer });
+    return this._create('watcher');
+  },
+
+  _createRsync() {
+    return this._create('rsync');
+  },
+
+  _rsync() {
+    let rsync = this.get('rsync');
+    if(!rsync) {
+      rsync = this._createRsync();
+      this.set('rsync', rsync);
+    }
+    return rsync;
   },
 
   __watch() {
@@ -26,22 +44,36 @@ export default Syncer.extend({
 
   __unwatch() {
     let watcher = this.get('watcher');
+    if(!watcher) {
+      return;
+    }
     watcher.off('change', this, this._onChange);
     this.set('watcher', null);
     return watcher.stop();
   },
 
   __syncAll() {
-    return new Promise(resolve => {
-      Ember.run.later(() => resolve(), 1000);
-    });
+    return this._rsync().all();
   },
 
-  __syncChanges(changes) {
-    console.log('__syncChanges', changes);
-    return new Promise(resolve => {
-      Ember.run.later(() => resolve(), 1000);
-    });
+  __syncChanges(files) {
+    for(let file of files) {
+      let marker = '';
+      if(!file.exists) {
+        marker = ' (deleted)';
+      }
+      info(`× ${file.name}${marker}`);
+    }
+    this._rsync().changes(files.map(file => file.name));
+  },
+
+  __stopSync() {
+    let rsync = this.get('rsync');
+    if(!rsync) {
+      return;
+    }
+    this.set('rsync', null);
+    return rsync.stop();
   }
 
 });

@@ -6,6 +6,8 @@
       {{else}}
         {{#if syncer.isWatching}}
           Watching…
+        {{else if syncer.error}}
+          {{syncer.error.message}}
         {{else}}
           Idle
         {{/if}}

@@ -75,15 +75,7 @@ export default Ember.Object.extend(Evented, {
   _subscribe() {
     let watch = this.get('_watch');
     let since = this.get('_since');
-
-    let exclude = [
-      'node_modules',
-      'tmp',
-      'dist',
-      'electron-out',
-      '.git'
-    ];
-
+    let exclude = this.get('project.exclude');
     let subscription = this.get('_subscription')
 
     let expression = [ 'allof', [ 'type', 'f' ] ];

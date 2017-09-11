@@ -15,6 +15,14 @@ export default Model.extend({
 
   group: byId('groups', 'groupId'),
 
+  exclude: [
+    'node_modules',
+    'tmp',
+    'dist',
+    'electron-out',
+    '.git'    
+  ],
+
   platform: service(),
 
   didLoad() {
