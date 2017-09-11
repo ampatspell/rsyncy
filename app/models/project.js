@@ -25,7 +25,7 @@ export default Model.extend({
 
   platform: service(),
   syncer: syncer(),
-  
+
   isSyncing: reads('syncer.isSyncing'),
 
   sync() {
