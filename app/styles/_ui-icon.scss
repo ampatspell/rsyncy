@@ -1,0 +1,10 @@
+.ui-icon {
+  display: inline-block;
+  &.has-action {
+    cursor: pointer;
+  }
+  &.disabled {
+    color: fade-out(#000, 0.75);
+    cursor: default;
+  }
+}

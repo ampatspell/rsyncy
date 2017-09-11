@@ -1,0 +1,27 @@
+{{#ui-block/form changeset=model.changeset as |form|}}
+  {{#form.row as |row|}}
+    {{row.input title='Name' property='name' placeholder='Untitled'}}
+  {{/form.row}}
+  {{#form.row as |row|}}
+    {{row.input title='Local path' property='source' placeholder='~/src/thing'}}
+  {{/form.row}}
+  {{#form.row as |row|}}
+    {{row.input title='Remote location' property='target' placeholder='user@server:/users/user/thing'}}
+  {{/form.row}}
+  {{#form.row as |row|}}
+    {{row.checkmark title='Watch file changes' property='watch'}}
+  {{/form.row}}
+  {{#form.row as |row|}}
+    {{#row.select title='Group' property='group' models=model.groups as |group|}}
+      {{group.name}}
+    {{/row.select}}
+  {{/form.row}}
+  {{#form.row as |row|}}
+    {{row.button title=(if model.isNew 'Create' 'Update') action=(action 'save') disabled=model.changeset.isActionsDisabled}}
+  {{/form.row}}
+  {{#unless model.isNew}}
+    {{#form.row as |row|}}
+      {{row.button title='Delete' action=(action 'delete') disabled=model.changeset.isBusy}}
+    {{/form.row}}
+  {{/unless}}
+{{/ui-block/form}}

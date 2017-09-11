@@ -1,0 +1,6 @@
+<div class="title">{{title}}</div>
+{{#each models as |model|}}
+  {{#ui-block/form/row/select/item model=model selected=(get changeset property) select=(action 'select' model)}}
+    {{yield model}}
+  {{/ui-block/form/row/select/item}}
+{{/each}}

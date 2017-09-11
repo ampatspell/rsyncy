@@ -1,0 +1,13 @@
+{{#ui-block/form changeset=model.changeset as |form|}}
+  {{#form.row as |row|}}
+    {{row.input title='Name' property='name' placeholder='Untitled'}}
+  {{/form.row}}
+  {{#form.row as |row|}}
+    {{row.button title=(if model.isNew 'Create' 'Update') action=(action 'save') disabled=model.changeset.isActionsDisabled}}
+  {{/form.row}}
+  {{#unless model.isNew}}
+    {{#form.row as |row|}}
+      {{row.button title='Delete' action=(action 'delete') disabled=model.changeset.isBusy}}
+    {{/form.row}}
+  {{/unless}}
+{{/ui-block/form}}

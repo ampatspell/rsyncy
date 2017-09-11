@@ -1,0 +1,45 @@
+.ui-screen {
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  > .header {
+    height: 44px;
+    background: fade-out(#000, 0.97);
+    border-bottom: 1px solid fade-out(#000, 0.94);
+    box-shadow: 0 1px 1px fade-out(#000, 0.95);
+    display: flex;
+    align-items: center;
+    position: relative;
+    > .item {
+      > .ui-icon {
+        padding-top: 3px;
+        font-size: 18px;
+      }
+      &.left,
+      &.right {
+        position: absolute;
+        with: 50px;
+        padding: 0 15px;
+      }
+      &.left {
+        left: 0;
+      }
+      &.right {
+        right: 0;
+      }
+      &.center {
+        position: absolute;
+        left: 50px;
+        right: 50px;
+        text-align: center;
+        font-size: 16px;
+        font-weight: 500;
+      }
+    }
+  }
+  > .content {
+    overflow-y: scroll;
+    flex: 1;
+  }
+}

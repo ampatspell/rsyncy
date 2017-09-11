@@ -1,0 +1,28 @@
+{{#ui-block/form changeset=model.changeset as |form|}}
+  {{#form.row as |row|}}
+    {{row.value title='Name' property='name'}}
+  {{/form.row}}
+  {{#form.row as |row|}}
+    {{row.value title='Local path' property='source' class='small'}}
+  {{/form.row}}
+  {{#form.row as |row|}}
+    {{row.value title='Remote location' property='target' class='small'}}
+  {{/form.row}}
+  {{#form.row as |row|}}
+    {{#row.value title='Watch file changes' property='watch' as |watch|}}
+      {{#if watch}}
+        Yes
+      {{else}}
+        No
+      {{/if}}
+    {{/row.value}}
+  {{/form.row}}
+  {{#form.row as |row|}}
+    {{#row.value title='Group' property='group' as |group|}}
+      {{group.name}}
+    {{/row.value}}
+  {{/form.row}}
+  {{#form.row as |row|}}
+    {{row.button title='Sync all' action=(action sync)}}
+  {{/form.row}}
+{{/ui-block/form}}

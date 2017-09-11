@@ -1,0 +1,123 @@
+.ui-block.form {
+  > .form-row {
+    &:first-child {
+      padding-top: 10px;
+    }
+    > .form-row-button {
+      margin: 15px;
+      padding: 12px;
+      background: fade-out(#000, 0.97);
+      border: 1px solid fade-out(#000, 0.95);
+      border-radius: 4px;
+      cursor: pointer;
+      > .title {
+        text-align: center;
+        font-size: 14px;
+        font-weight: 600;
+      }
+      &.no-action {
+        cursor: default;
+        opacity: 0.5;
+      }
+      &.disabled {
+        cursor: default;
+        opacity: 0.5;
+      }
+    }
+    > .form-row-input {
+      padding: 15px 15px 10px 15px;
+      > .title {
+        font-size: 11px;
+        font-weight: 600;
+        padding-bottom: 5px;
+      }
+      > input {
+        -webkit-appearance: none;
+        display: inline-block;
+        outline: none;
+        border: none;
+        background: none;
+        padding: 0;
+        margin: 0;
+        font-family: $font-family;
+        font-size: 15px;
+        text-decoration: none;
+        color: #000;
+        width: 100%;
+        border-bottom: 1px solid fade-out(#000, 0.95);
+        &:-webkit-autofill,
+        &:-webkit-autofill:hover,
+        &:-webkit-autofill:active,
+        &:-webkit-autofill:focus {
+          -webkit-box-shadow: 0 0 0 20px white inset !important;
+        }
+        &::placeholder {
+          color: fade-out(#000, 0.8);
+        }
+      }
+    }
+    > .form-row-value {
+      padding: 15px 15px 0px 15px;
+      > .title {
+        font-size: 11px;
+        font-weight: 600;
+        padding-bottom: 7px;
+      }
+      > .value {
+        font-size: 15px;
+      }
+      &.small {
+        > .value {
+          font-size: 13px;
+        }
+      }
+    }
+    > .form-row-select {
+      padding: 0 15px 15px 15px;
+      > .title {
+        font-size: 11px;
+        font-weight: 600;
+        padding-bottom: 5px;
+      }
+      > .item {
+        padding: 5px 0;
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
+        > .content {
+          padding-left: 10px;
+          font-size: 15px;
+          flex: 1;
+        }
+        > .accessory {
+          font-size: 18px;
+          color: fade-out(#000, 0.9);
+        }
+        &.selected {
+          > .accessory {
+            color: #000;
+          }
+        }
+      }
+    }
+    > .form-row-checkmark {
+      padding: 0 15px 15px 15px;
+      display: flex;
+      align-items: center;
+      > .checkmark {
+      }
+      > .title {
+        flex: 1;
+        font-size: 15px;
+        padding-right: 10px;
+      }
+    }
+  }
+}
+
+.form-row-errors {
+  padding-top: 2px;
+  font-size: 10px;
+  font-weight: 600;
+  min-height: 12px;
+}

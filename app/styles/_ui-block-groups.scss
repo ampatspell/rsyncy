@@ -1,0 +1,17 @@
+.ui-block.groups {
+  > .group {
+    > .name {
+      cursor: pointer;
+      padding: 20px 15px 10px 15px;
+      text-transform: uppercase;
+      font-weight: 600;
+      font-size: 11px;
+    }
+    > .projects {
+    }
+  }
+  > .placeholder {
+    padding: 50px 15px;
+    text-align: center;
+  }
+}

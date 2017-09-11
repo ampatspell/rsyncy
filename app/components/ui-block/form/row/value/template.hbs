@@ -1,0 +1,9 @@
+<div class="title">{{title}}</div>
+<div class="value">
+  {{#if hasBlock}}
+    {{yield (get changeset property)}}
+  {{else}}
+    {{get changeset property}}
+  {{/if}}
+</div>
+{{ui-block/form/row/-errors changeset=changeset property=property}}

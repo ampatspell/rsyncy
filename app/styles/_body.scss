@@ -1,0 +1,17 @@
+body {
+  cursor: default;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  font-family: $font-family;
+  font-size: 13px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+* {
+  -webkit-user-select: none;
+  user-select: none;
+}

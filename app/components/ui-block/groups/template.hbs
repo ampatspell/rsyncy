@@ -1,0 +1,12 @@
+{{#each groups as |group|}}
+  <div class="group">
+    <div class="name" {{action showGroup group}}>{{group.name}}</div>
+    {{ui-block/projects
+        projects=group.projects
+        select=(action showProject)
+        updateWatch=(action updateProjectWatch)
+    }}
+  </div>
+{{else}}
+  <div class="placeholder">No projects added yet</div>
+{{/each}}

@@ -1,0 +1,33 @@
+{{#if hasBlock}}
+
+  {{yield (hash
+    left=(component 'ui-screen/header/item' class='left')
+    center=(component 'ui-screen/header/item' class='center')
+    right=(component 'ui-screen/header/item' class='right')
+  )}}
+
+{{else if navigation}}
+
+  {{#with navigation.left as |item|}}
+    {{#ui-screen/header/item class='left'}}
+      {{#if item.action}}
+        {{ui-icon item.icon action=(action item._action item)}}
+      {{else}}
+        {{ui-icon item.icon disabled=true}}
+      {{/if}}
+    {{/ui-screen/header/item}}
+  {{/with}}
+
+  {{ui-screen/header/item class='center' value=navigation.title}}
+
+  {{#with navigation.right as |item|}}
+    {{#ui-screen/header/item class='right'}}
+      {{#if item.action}}
+        {{ui-icon item.icon action=(action item._action item) disabled=item.disabled}}
+      {{else}}
+        {{ui-icon item.icon disabled=true}}
+      {{/if}}
+    {{/ui-screen/header/item}}
+  {{/with}}
+
+{{/if}}

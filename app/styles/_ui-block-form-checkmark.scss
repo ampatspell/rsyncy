@@ -1,0 +1,45 @@
+.ui-block.form-checkmark {
+  $w: 40px;
+  $h: 25px;
+  $on: #555;
+  $duration: 0.2s;
+  cursor: pointer;
+  overflow: hidden;
+  display: inline-block;
+  width: $w;
+  height: $h;
+  border-radius: $h / 2;
+  border: 1px solid #fff;
+  position: relative;
+  margin-top: 1px;
+  transition:
+    background-color $duration ease-in-out,
+    border-color $duration ease-in-out;
+  &:after {
+    transition:
+      left $duration ease-in-out,
+      border-color $duration ease-in-out;
+    position: absolute;
+    content: '';
+    top: 0px;
+    width: $h - 2px;
+    height: $h - 2px;
+    border-radius: $h;
+    background: #fff;
+    box-shadow: 0 0 1px fade-out(#000, 0.8);
+  }
+  &.checked {
+    background: $on;
+    border-color: darken($on, 5%);
+    &:after {
+      left: $w - $h;
+    }
+  }
+  &.unchecked {
+    background: fade-out(#000, 0.95);
+    border-color: fade-out(#000, 0.9);
+    &:after {
+      left: 0px;
+    }
+  }
+}
