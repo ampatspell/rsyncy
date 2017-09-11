@@ -4,7 +4,7 @@ import { Model, byId, settings } from './-base';
 export default Model.extend({
 
   name:    settings('name'),
-  source:   settings('source'),
+  source:  settings('source'),
   target:  settings('target'),
   watch:   settings('watch'),
   groupId: settings('groupId'),
