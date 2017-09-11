@@ -9,6 +9,7 @@ const {
 export default Syncer.extend({
 
   isSyncing: false,
+  isWatching: false,
 
   _info: on('init', function() {
     info('init', this+'');
@@ -22,6 +23,10 @@ export default Syncer.extend({
   start() {
     info('start', this+'');
     this._sync();
+    let watch = this.get('project.watch');
+    if(watch) {
+      this.set('isWatching', true);
+    }
   },
 
   sync() {

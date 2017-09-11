@@ -27,6 +27,7 @@ export default Model.extend({
   syncer: syncer(),
 
   isSyncing: reads('syncer.isSyncing'),
+  isWatching: reads('syncer.isWatching'),
 
   sync() {
     this.get('syncer').sync();
