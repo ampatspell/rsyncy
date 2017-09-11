@@ -22,13 +22,14 @@ export default Ember.Object.extend(Evented, {
   }).readOnly(),
 
   _client: computed(function() {
-    let watchman = requireNode('fb-watchman');
-    return new watchman.Client();
+    return resolve().then(() => {
+      let watchman = requireNode('fb-watchman');
+      return new watchman.Client();
+    });
   }).readOnly(),
 
   _capabilities() {
-    return new Promise((resolve, reject) => {
-      let client = this.get('_client');
+    return this.get('_client').then(client => new Promise((resolve, reject) => {
       client.capabilityCheck({ optional: [], required: [ 'relative_root' ] }, (error, resp) => {
           if(error) {
             client.end();
@@ -36,12 +37,11 @@ export default Ember.Object.extend(Evented, {
           }
           resolve(resp);
         });
-    });
+    }));
   },
 
   _watch() {
-    return new Promise((resolve, reject) => {
-      let client = this.get('_client');
+    return this.get('_client').then(client => new Promise((resolve, reject) => {
       let source = this.get('project.source');
       client.command([ 'watch-project', source ], (error, resp) => {
         if(error) {
@@ -56,13 +56,12 @@ export default Ember.Object.extend(Evented, {
 
         resolve(resp);
       });
-    });
+    }));
   },
 
   _clock() {
-    return new Promise((resolve, reject) => {
+    return this.get('_client').then(client => new Promise((resolve, reject) => {
       let watch = this.get('__watch');
-      let client = this.get('_client');
       client.command([ 'clock', watch ], (error, resp) => {
         if(error) {
           return reject(error);
@@ -70,7 +69,7 @@ export default Ember.Object.extend(Evented, {
         this.set('__since', resp.clock);
         resolve(resp);
       });
-    });
+    }));
   },
 
   _subscribe() {
@@ -97,8 +96,7 @@ export default Ember.Object.extend(Evented, {
       since
     };
 
-    return new Promise((resolve, reject) => {
-      let client = this.get('_client');
+    return this.get('_client').then(client => new Promise((resolve, reject) => {
       client.command([ 'subscribe', watch, subscription, opts ], (error, resp) => {
         if(error) {
           return reject(error);
@@ -106,28 +104,28 @@ export default Ember.Object.extend(Evented, {
         client.on('subscription', info => this._onChange(info));
         resolve(resp);
       });
-    });
+    }));
   },
 
   _unsubscribe() {
     let watch = this.get('__watch');
     let subscription = this.get('_subscription')
 
-    return new Promise((resolve, reject) => {
-      let client = this.get('_client');
+    return this.get('_client').then(client => new Promise((resolve, reject) => {
       client.command([ 'unsubscribe', watch, subscription ], (error, resp) => {
         if(error) {
           return reject(error);
         }
         resolve(resp);
       });
-    });
+    }));
   },
 
   _endClient() {
-    let client = this.get('_client');
-    client.removeAllListeners('subscription');
-    client.end();
+    return this.get('_client').then(client => {
+      client.removeAllListeners('subscription');
+      client.end();
+    });
   },
 
   _onChange(info) {
@@ -151,7 +149,6 @@ export default Ember.Object.extend(Evented, {
   },
 
   start() {
-    window.w = this;
     return resolve()
       .then(() => this._capabilities())
       .then(() => this._watch())
