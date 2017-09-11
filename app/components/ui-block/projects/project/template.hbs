@@ -1,16 +1,14 @@
 <div class="content">
   <div class="name">{{project.name}}</div>
   <div class="status">
-      {{#if syncer.isSyncing}}
-        Syncing…
+      {{#if syncer.message}}
+        {{syncer.message}}
+      {{else if syncer.error}}
+        {{syncer.error.message}}
+      {{else if syncer.isWatching}}
+        Watching…
       {{else}}
-        {{#if syncer.isWatching}}
-          Watching…
-        {{else if syncer.error}}
-          {{syncer.error.message}}
-        {{else}}
-          Idle
-        {{/if}}
+        Idle
       {{/if}}
   </div>
 </div>

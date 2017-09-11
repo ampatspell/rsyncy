@@ -1,7 +1,16 @@
 import Ember from 'ember';
 import Syncer from './-base';
 
+const {
+  RSVP: { Promise },
+  run: { later }
+} = Ember;
+
 export default Syncer.extend({
+
+  __later() {
+    return new Promise(resolve => later(() => resolve(), 1000));
+  },
 
   __watch() {
   },
@@ -10,12 +19,14 @@ export default Syncer.extend({
   },
 
   __syncAll() {
-    return new Promise(resolve => {
-      Ember.run.later(() => resolve(), 1000);
-    });
+    return this.__later().then(() => `Sync took 1s`);
   },
 
-  __syncChanges(changes) {
-  }
+  __syncChanges() {
+    return this.__later().then(() => `Sync took 1s`);
+  },
+
+  __stopSync() {
+  },
 
 });

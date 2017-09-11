@@ -27,6 +27,7 @@ export default Ember.Object.extend({
   isSyncing: false,
   isWatching: false,
   isStopped: false,
+  message: null,
   error: null,
 
   queue: array(),
@@ -52,15 +53,17 @@ export default Ember.Object.extend({
 
   _syncAllTask: task(function() {
     return resolve()
-      .then(() => this.set('isSyncing', true))
+      .then(() => this.setProperties({ isSyncing: true, message: 'Syncing…' }))
       .then(() => this.__syncAll())
+      .then(message => this.set('message', message))
       .finally(() => this.set('isSyncing', false));
   }),
 
   _syncChangesTask: task(function(changes) {
     return resolve()
-      .then(() => this.set('isSyncing', true))
+      .then(() => this.setProperties({ isSyncing: true, message: 'Syncing…' }))
       .then(() => this.__syncChanges(changes))
+      .then(message => this.set('message', message))
       .finally(() => this.set('isSyncing', false));
   }),
 

@@ -64,7 +64,7 @@ export default Syncer.extend({
       }
       info(`× ${file.name}${marker}`);
     }
-    this._rsync().changes(files.map(file => file.name));
+    return this._rsync().changes(files.map(file => file.name));
   },
 
   __stopSync() {

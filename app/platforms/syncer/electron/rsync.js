@@ -1,11 +1,13 @@
 import Ember from 'ember';
+/* global requireNode */
+/* global Buffer */
 
 const {
-  Evented,
+  RSVP: { Promise },
   computed: { reads }
 } = Ember;
 
-export default Ember.Object.extend(Evented, {
+export default Ember.Object.extend({
 
   syncer: null,
   project: reads('syncer.project'),
@@ -50,8 +52,8 @@ export default Ember.Object.extend(Evented, {
         if(code > 0) {
           reject(new Ember.Error(output));
         } else {
-          this.trigger('done', end - start);
-          resolve();
+          let took = requireNode('pretty-ms')(end - start);
+          resolve(`Sync took ${took}`);
         }
       };
 
@@ -88,7 +90,6 @@ export default Ember.Object.extend(Evented, {
   },
 
   stop() {
-    console.log(this+' stop');
   }
 
 });
