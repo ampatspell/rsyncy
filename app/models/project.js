@@ -4,8 +4,8 @@ import { Model, byId, settings } from './-base';
 export default Model.extend({
 
   name:    settings('name'),
-  local:   settings('local'),
-  remote:  settings('remote'),
+  source:   settings('source'),
+  target:  settings('target'),
   watch:   settings('watch'),
   groupId: settings('groupId'),
 

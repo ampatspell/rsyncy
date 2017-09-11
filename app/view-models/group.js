@@ -2,7 +2,7 @@ import Edit from './-edit';
 
 export default Edit.extend({
 
-  modelName: 'group',
+  storeName: 'groups',
   changesetName: 'group-changeset',
   changesetDefaults: { name: 'New Group' },
 

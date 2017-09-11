@@ -90,6 +90,12 @@ export default Ember.Object.extend({
     return this.get('settings').save();
   },
 
+  _deleteModel(model) {
+    this.get('models').removeObject(model);
+    model.destroy();
+    return this.get('settings').save();
+  },
+
   save() {
     return this._serialize().then(json => this._save(json));
   },

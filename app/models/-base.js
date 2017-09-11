@@ -8,17 +8,27 @@ const {
 export const byId = (name, key) => {
   let idKey = `settings.${key}`;
   let modelsKey = `store.store.${name}.models`;
-  return computed(idKey, `${modelsKey}.@each.id`, function() {
-    let id = this.get(idKey);
-    if(!id) {
-      return;
+  return computed(idKey, `${modelsKey}.@each.id`, {
+    get() {
+      let id = this.get(idKey);
+      if(!id) {
+        return;
+      }
+      let models = this.get(modelsKey);
+      if(!models) {
+        return;
+      }
+      return models.findBy('id', id);
+    },
+    set(_, value) {
+      let id = null;
+      if(value) {
+        id = value.get('id');
+      }
+      this.set(key, id);
+      return value;
     }
-    let models = this.get(modelsKey);
-    if(!models) {
-      return;
-    }
-    return models.findBy('id', id);
-  }).readOnly();
+  });
 }
 
 export const inverse = (name, key) => {
@@ -42,7 +52,11 @@ export const Model = Ember.Object.extend({
   id: reads('settings.id').readOnly(),
 
   save() {
-    return this.get('settings').save();
+    return this.get('store')._saveModel(this);
+  },
+
+  delete() {
+    return this.get('store')._deleteModel(this);
   }
 
 });

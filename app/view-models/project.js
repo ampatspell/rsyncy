@@ -1,19 +1,16 @@
+import Ember from 'ember';
 import Edit from './-edit';
+
+const {
+  computed: { reads }
+} = Ember;
 
 export default Edit.extend({
 
-  groups: null,
+  groups: reads('store.groups.models'),
 
-  modelName: 'project',
+  storeName: 'projects',
   changesetName: 'project-changeset',
-  changesetDefaults: { name: 'New Project' },
-
-  load() {
-    return this.get('store').findAll('group').then(groups => this.setProperties({ groups }));
-  },
-
-  willUpdate() {
-    return this.get('groups').map(group => group.save());
-  }
+  changesetDefaults: { name: 'New Project' }
 
 });

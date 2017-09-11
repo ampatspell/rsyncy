@@ -48,6 +48,10 @@ export default Ember.Service.extend({
 
   find(name, id) {
     return this.get(name).find(id);
+  },
+
+  model(name) {
+    return this.get(name).model();
   }
 
 });

@@ -35,8 +35,8 @@ export default ViewModel.extend({
   update(props) {
     let model = this.get('target');
     if(!model) {
-      let modelName = this.get('modelName');
-      model = this.get('store').createRecord(modelName);
+      let storeName = this.get('storeName');
+      model = this.get('store').model(storeName);
       this.set('target', model);
     }
 
@@ -55,7 +55,7 @@ export default ViewModel.extend({
     if(!model) {
       return resolve();
     }
-    return model.destroyRecord();
+    return model.delete();
   }
 
 });

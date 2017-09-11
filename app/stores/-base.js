@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 const {
   getOwner,
+  assign,
   RSVP: { resolve, reject }
 } = Ember;
 
@@ -15,10 +16,10 @@ export default Ember.Object.extend({
 
   models: null,
 
-  _createModel() {
+  _createModel(props) {
     let modelName = this.get('modelName');
     let store = this;
-    return getOwner(this).factoryFor(`model:${modelName}`).create({ store });
+    return getOwner(this).factoryFor(`model:${modelName}`).create(assign({ store }, props));
   },
 
   load() {
@@ -40,6 +41,30 @@ export default Ember.Object.extend({
       }
       return model;
     })
+  },
+
+  model() {
+    let settings = this.get('settings').model();
+    let model = this._createModel({ settings });
+    this.get('models').pushObject(model);
+    return model;
+  },
+
+  _saveModel(model) {
+    return this.get('settings')._saveModel(model);
+  },
+
+  __deleteModel(model) {
+    this.get('models').removeObject(model);
+    model.destroy();
+  },
+
+  _deleteModel(model) {
+    let settings = model.get('settings');
+    return resolve()
+      .then(() => this.__deleteModel(model))
+      .then(() => this.get('settings')._deleteModel(settings))
+      .then(() => undefined);
   }
 
 });
