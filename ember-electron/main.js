@@ -1,8 +1,10 @@
 /* eslint-env node */
-const { app, Menu, BrowserWindow, protocol } = require('electron');
+const { app, Menu, Tray, BrowserWindow, protocol, ipcMain } = require('electron');
 const { dirname, join, resolve } = require('path');
 const protocolServe = require('electron-protocol-serve');
 const menu = require('./main/menu');
+
+const resources = join(__dirname, 'resources')
 
 protocol.registerStandardSchemes([ 'serve' ], { secure: true });
 protocolServe({
@@ -11,23 +13,60 @@ protocolServe({
   protocol,
 });
 
+app.dock.hide();
+
 let window = null;
+let tray = null;
 let quit = false;
 
+const showWindow = () => {
+  window.show();
+  window.focus();
+};
+
+const toggleWindow = () => {
+  if(window.isVisible()) {
+    window.hide();
+  } else {
+    showWindow();
+  }
+};
+
+const icon = {
+  idle: join(resources, 'empty-circle.png'),
+  syncing: join(resources, 'dot-circle.png')
+};
+
 app.on('window-all-closed', () => app.quit());
-app.on('activate', () => window.show());
+app.on('activate', () => showWindow());
 app.on('before-quit', () => quit = true);
 
 app.on('ready', () => {
+
+  tray = new Tray(icon.idle);
+
+  tray.on('right-click', () => toggleWindow());
+  tray.on('double-click', () => showWindow());
+
+  tray.on('click', e => {
+    toggleWindow();
+    if(window.isVisible() && process.defaultApp && e.metaKey) {
+      window.openDevTools();
+    }
+  });
+
   Menu.setApplicationMenu(Menu.buildFromTemplate(menu));
 
   window = new BrowserWindow({
     width: 340,
     height: 550,
-    title: ''
+    show: false,
+    fullscreenable: false,
+    title: '',
+    webPreferences: {
+      backgroundThrottling: false
+    }
   });
-
-  // window.openDevTools();
 
   const emberAppLocation = 'serve://dist';
   window.loadURL(emberAppLocation);
@@ -65,4 +104,8 @@ process.on('uncaughtException', (err) => {
   console.log('An exception in the main thread was not handled.');
   console.log('This is a serious issue that needs to be handled and/or debugged.');
   console.log(`Exception: ${err}`);
+});
+
+ipcMain.on('status-changed', (e, info) => {
+  tray.setImage(info.syncing ? icon.syncing : icon.idle);
 });
