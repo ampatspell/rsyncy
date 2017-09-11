@@ -15,7 +15,8 @@
     "start": "ember server",
     "test": "ember test",
     "bump": "npm version patch; git push --follow-tags",
-    "package": "ember electron:package"
+    "package": "ember electron:package",
+    "release": "npm run bump && npm run package"
   },
   "devDependencies": {
     "babel-plugin-transform-async-to-generator": "^6.24.1",
