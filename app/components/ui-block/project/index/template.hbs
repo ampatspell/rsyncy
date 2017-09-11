@@ -9,6 +9,13 @@
     {{row.value title='Remote location' property='target' class='small'}}
   {{/form.row}}
   {{#form.row as |row|}}
+    {{#row.value title='Exclude' property='exclude' class='small' as |value|}}
+      {{#each (split value ',') as |item|}}
+        <div>{{item}}</div>
+      {{/each}}
+    {{/row.value}}
+  {{/form.row}}
+  {{#form.row as |row|}}
     {{#row.value title='Watch file changes' property='watch' as |watch|}}
       {{#if watch}}
         Yes

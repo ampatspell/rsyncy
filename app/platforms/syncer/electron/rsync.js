@@ -14,8 +14,8 @@ export default Ember.Object.extend({
 
   _sync(additionalArgs=[]) {
     let start = new Date();
-    let { source, target, exclude } = this.get('project').getProperties('source', 'target', 'exclude');
-    let excludes = exclude.map(name => `--exclude="${name}"`);
+    let { source, target, excludes } = this.get('project').getProperties('source', 'target', 'excludes');
+    let excludeArgs = excludes.map(name => `--exclude="${name}"`);
 
     let args = [
       'rsync',
@@ -27,7 +27,7 @@ export default Ember.Object.extend({
       '--no-group',
       '--delete',
       ...additionalArgs,
-      ...excludes,
+      ...excludeArgs,
       `${source}/`,
       `${target}/`
     ];

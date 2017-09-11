@@ -1,8 +1,9 @@
 import Ember from 'ember';
 
+/* global requireNode */
+
 const {
   Evented,
-  on,
   computed,
   computed: { reads },
   RSVP: { Promise, resolve }
@@ -13,8 +14,8 @@ export default Ember.Object.extend(Evented, {
   syncer: null,
   project: reads('syncer.project'),
 
-  _watch: null,
-  _since: null,
+  __watch: null,
+  __since: null,
 
   _subscription: computed(function() {
     return `syncy-${~~(Math.random() * 1000)}`;
@@ -51,7 +52,7 @@ export default Ember.Object.extend(Evented, {
           this.trigger('warning', resp.warning);
         }
 
-        this.set('_watch', resp.watch);
+        this.set('__watch', resp.watch);
 
         resolve(resp);
       });
@@ -60,26 +61,26 @@ export default Ember.Object.extend(Evented, {
 
   _clock() {
     return new Promise((resolve, reject) => {
-      let watch = this.get('_watch');
+      let watch = this.get('__watch');
       let client = this.get('_client');
       client.command([ 'clock', watch ], (error, resp) => {
         if(error) {
           return reject(error);
         }
-        this.set('_since', resp.clock);
+        this.set('__since', resp.clock);
         resolve(resp);
       });
     });
   },
 
   _subscribe() {
-    let watch = this.get('_watch');
-    let since = this.get('_since');
-    let exclude = this.get('project.exclude');
+    let watch = this.get('__watch');
+    let since = this.get('__since');
+    let excludes = this.get('project.excludes');
     let subscription = this.get('_subscription')
 
     let expression = [ 'allof', [ 'type', 'f' ] ];
-    for(let path of exclude) {
+    for(let path of excludes) {
       expression.push([
         'not', [
           'anyof',
@@ -103,13 +104,13 @@ export default Ember.Object.extend(Evented, {
           return reject(error);
         }
         client.on('subscription', info => this._onChange(info));
-        resolve();
+        resolve(resp);
       });
     });
   },
 
   _unsubscribe() {
-    let watch = this.get('_watch');
+    let watch = this.get('__watch');
     let subscription = this.get('_subscription')
 
     return new Promise((resolve, reject) => {
@@ -118,7 +119,7 @@ export default Ember.Object.extend(Evented, {
         if(error) {
           return reject(error);
         }
-        resolve();
+        resolve(resp);
       });
     });
   },

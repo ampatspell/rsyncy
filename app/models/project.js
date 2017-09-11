@@ -2,7 +2,9 @@ import Ember from 'ember';
 import { Model, byId, settings } from './-base';
 
 const {
-  inject: { service }
+  inject: { service },
+  computed,
+  A
 } = Ember;
 
 export default Model.extend({
@@ -11,17 +13,18 @@ export default Model.extend({
   source: settings('source'),
   target: settings('target'),
   watch: settings('watch'),
+  exclude: settings('exclude'),
   groupId: settings('groupId'),
 
   group: byId('groups', 'groupId'),
 
-  exclude: [
-    'node_modules',
-    'tmp',
-    'dist',
-    'electron-out',
-    '.git'    
-  ],
+  excludes: computed('exclude', function() {
+    let exclude = this.get('exclude');
+    if(!exclude) {
+      return A();
+    }
+    return A(exclude.split(',').map(item => item.trim()));
+  }).readOnly(),
 
   platform: service(),
 

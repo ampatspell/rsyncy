@@ -9,6 +9,9 @@
     {{row.input title='Remote location' property='target' placeholder='user@server:/users/user/thing'}}
   {{/form.row}}
   {{#form.row as |row|}}
+    {{row.textarea title='Exclude' property='exclude' placeholder='.git, node_modules'}}
+  {{/form.row}}
+  {{#form.row as |row|}}
     {{row.checkmark title='Watch file changes' property='watch'}}
   {{/form.row}}
   {{#form.row as |row|}}

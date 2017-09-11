@@ -11,6 +11,16 @@ export default Edit.extend({
 
   storeName: 'projects',
   changesetName: 'project-changeset',
-  changesetDefaults: { name: 'New Project' }
+  changesetDefaults: {
+    name: 'New Project',
+    exclude: [
+      '.git',
+      '.hg',
+      'node_modules',
+      'bower_components',
+      'tmp',
+      'dist'
+    ].join(', ')
+  }
 
 });
