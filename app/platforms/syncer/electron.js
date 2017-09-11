@@ -3,9 +3,7 @@ import Syncer from './-base';
 
 const {
   getOwner,
-  on,
-  Logger: { info },
-  RSVP: { resolve, reject }
+  Logger: { info }
 } = Ember;
 
 export default Syncer.extend({

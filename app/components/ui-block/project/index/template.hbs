@@ -29,4 +29,7 @@
       {{group.name}}
     {{/row.value}}
   {{/form.row}}
+  {{#form.row as |row|}}
+    {{row.button title='Sync All' action=(action 'sync') disabled=syncer.isSyncing}}
+  {{/form.row}}
 {{/ui-block/form}}
