@@ -7,7 +7,7 @@ const {
 export default Ember.Route.extend({
 
   navigation: {
-    title: reads('model.project.name'),
+    title: reads('model.target.name'),
     left: {
       icon: 'chevron-left',
       action() {
@@ -17,14 +17,14 @@ export default Ember.Route.extend({
     right: {
       icon: 'pencil',
       action() {
-        this.transitionTo('projects.project.edit', this.get('model.project'));
+        this.transitionTo('projects.project.edit', this.get('model.target'));
       }
     }
   },
 
   model() {
-    let project = this.modelFor('projects.project');
-    return this.loadViewModel('project', { project });
+    let target = this.modelFor('projects.project');
+    return this.loadViewModel('project', { target });
   }
 
 });

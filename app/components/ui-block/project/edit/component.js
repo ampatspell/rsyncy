@@ -3,9 +3,8 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   actions: {
     save() {
-      let model = this.get('model');
-      return model.save().then(() => {
-        return this.attrs.saved && this.attrs.saved(model.get('project'));
+      return this.get('model').save().then(project => {
+        return this.attrs.saved && this.attrs.saved(project);
       });
     },
     delete() {

@@ -7,18 +7,18 @@ const {
 export default Ember.Route.extend({
 
   navigation: {
-    title: reads('model.group.name'),
+    title: reads('model.target.name'),
     left: {
       icon: 'chevron-left',
       action() {
-        this.transitionTo('groups.group', this.get('model.group'));
+        this.transitionTo('groups.group', this.get('model.target'));
       }
     }
   },
 
   model() {
-    let group = this.modelFor('groups.group');
-    return this.loadViewModel('group', { group });
+    let target = this.modelFor('groups.group');
+    return this.loadViewModel('group', { target });
   }
 
 });
