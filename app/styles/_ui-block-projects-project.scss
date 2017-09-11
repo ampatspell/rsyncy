@@ -10,6 +10,14 @@
   align-items: center;
   > .content {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    > .name,
+    > .status {
+      flex: 1;
+      @include ellipsis;
+    }
     > .name {
       padding-bottom: 5px;
       font-weight: 500;
@@ -19,6 +27,7 @@
     }
   }
   > .accessory {
+    padding-left: 14px;
     > .icon {
       font-size: 18px;
     }
