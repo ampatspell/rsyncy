@@ -9,7 +9,7 @@ export default Ember.Route.extend({
   watchers: service(),
 
   model() {
-    return this.get('watchers').load().then(() => undefined);
+    return this.get('store').load().then(() => undefined);
   }
 
 });

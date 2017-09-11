@@ -14,5 +14,6 @@ export default {
     }
 
     window.store = app.lookup('service:store');
+    window.settings = app.lookup('service:settings');
   }
 };
