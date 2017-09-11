@@ -1,7 +1,8 @@
 import Ember from 'ember';
 
 const {
-  getOwner
+  getOwner,
+  RSVP: { resolve, reject }
 } = Ember;
 
 export default Ember.Object.extend({
@@ -11,6 +12,8 @@ export default Ember.Object.extend({
   store: null,
 
   modelName: null,
+
+  models: null,
 
   _createModel() {
     let modelName = this.get('modelName');
@@ -25,6 +28,18 @@ export default Ember.Object.extend({
       return model;
     });
     this.set('models', models);
+  },
+
+  find(id) {
+    return resolve().then(() => {
+      let model = this.get('models').findBy('id', id);
+      if(!model) {
+        let modelName = this.get('modelName');
+        let err = new Ember.Error(`${modelName}:${id} not found`);
+        return reject(err);
+      }
+      return model;
+    })
   }
 
 });

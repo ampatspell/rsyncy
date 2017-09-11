@@ -46,4 +46,8 @@ export default Ember.Service.extend({
       .then(() => this);
   },
 
+  find(name, id) {
+    return this.get(name).find(id);
+  }
+
 });
