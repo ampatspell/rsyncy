@@ -13,7 +13,9 @@
   "scripts": {
     "build": "ember build",
     "start": "ember server",
-    "test": "ember test"
+    "test": "ember test",
+    "bump": "npm version patch; git push --follow-tags",
+    "package": "ember electron:package"
   },
   "devDependencies": {
     "babel-plugin-transform-async-to-generator": "^6.24.1",
