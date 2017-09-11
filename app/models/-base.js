@@ -60,6 +60,7 @@ export const Model = Ember.Object.extend({
     return this.get('store')._deleteModel(this);
   },
 
+  didLoad() {},
   didCreate() {},
   didUpdate() {},
   willDelete() {},

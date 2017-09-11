@@ -14,11 +14,13 @@ const name = electron ? 'electron' : 'browser';
 
 const Service = Ember.ObjectProxy.extend({
 
-  name,
-
   content: computed(function() {
-    return getOwner(this).factoryFor(`platform:${name}`).create();
-  }).readOnly()
+    return getOwner(this).factoryFor(`platform:${name}`).create({ name });
+  }).readOnly(),
+
+  syncer() {
+    return this.get('content').syncer(...arguments);
+  }
 
 });
 

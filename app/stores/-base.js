@@ -3,7 +3,7 @@ import Ember from 'ember';
 const {
   getOwner,
   assign,
-  RSVP: { resolve, reject }
+  RSVP: { all, resolve, reject }
 } = Ember;
 
 export default Ember.Object.extend({
@@ -29,6 +29,7 @@ export default Ember.Object.extend({
       return model;
     });
     this.set('models', models);
+    return all(models.map(model => model.didLoad())).then(() => this);
   },
 
   find(id) {
