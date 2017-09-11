@@ -14,6 +14,11 @@ export default Ember.Controller.extend({
     updateProjectWatch(project, watch) {
       project.set('watch', watch);
       project.save();
+    },
+    syncProject(project) {
+      Ember.Logger.info('sync project', project+'');
+      project.set('isSyncing', true);
+      Ember.run.later(() => project.set('isSyncing', false), 2000);
     }
   }
 

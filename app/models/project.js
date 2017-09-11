@@ -13,7 +13,7 @@ export default Model.extend({
   source: attr('string'),
   target: attr('string'),
 
-  watch: attr('string'),
+  watch: attr('boolean'),
 
   group: belongsTo('group', { async: true, autoSave: true, inverse: 'projects' })
 

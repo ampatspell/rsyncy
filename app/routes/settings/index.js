@@ -3,17 +3,16 @@ import Ember from 'ember';
 export default Ember.Route.extend({
 
   navigation: {
-    title: 'Projects',
+    title: 'Settings',
     left: {
-      icon: 'cog',
+      icon: 'chevron-left',
       action() {
-        this.transitionTo('settings');
+        this.transitionTo('groups');
       }
     },
     right: {
-      icon: 'plus-square',
+      icon: 'power-off',
       action() {
-        this.transitionTo('new');
       }
     }
   }

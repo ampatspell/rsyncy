@@ -20,6 +20,8 @@ Router.map(function() {
       this.route('edit');
     });
   });
+  this.route('settings', function() {
+  });
 });
 
 export default Router;

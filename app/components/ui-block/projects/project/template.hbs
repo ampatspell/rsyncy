@@ -1,7 +1,24 @@
 <div class="content">
   <div class="name">{{project.name}}</div>
-  <div class="status">Syncing…</div>
+  <div class="status">
+    {{#if project.isSyncing}}
+      Syncing…
+    {{else}}
+      {{#if project.watch}}
+        Watching…
+      {{else}}
+        Idle
+      {{/if}}
+    {{/if}}
+  </div>
 </div>
 <div class="accessory">
-  {{ui-block/form/checkmark checked=project.watch update=(action updateWatch)}}
+  {{#if project.isSyncing}}
+    {{ui-icon 'refresh' class='icon' spin=true}}
+  {{else}}
+    {{#if project.watch}}
+    {{else}}
+      {{ui-icon 'refresh' class='icon' action=(action sync)}}
+    {{/if}}
+  {{/if}}
 </div>
