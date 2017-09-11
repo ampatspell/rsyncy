@@ -1,9 +1,8 @@
 /* eslint-env node */
-const { app, BrowserWindow, protocol } = require('electron');
+const { app, Menu, BrowserWindow, protocol } = require('electron');
 const { dirname, join, resolve } = require('path');
 const protocolServe = require('electron-protocol-serve');
-
-let mainWindow = null;
+const menu = require('./main/menu');
 
 protocol.registerStandardSchemes([ 'serve' ], { secure: true });
 protocolServe({
@@ -12,41 +11,53 @@ protocolServe({
   protocol,
 });
 
-app.on('window-all-closed', () => {
-  app.quit();
-});
+let window = null;
+let quit = false;
+
+app.on('window-all-closed', () => app.quit());
+app.on('activate', () => window.show());
+app.on('before-quit', () => quit = true);
 
 app.on('ready', () => {
-  mainWindow = new BrowserWindow({
+  Menu.setApplicationMenu(Menu.buildFromTemplate(menu));
+
+  window = new BrowserWindow({
     width: 340,
-    height: 525,
+    height: 550,
     title: ''
   });
 
-  // mainWindow.openDevTools();
+  // window.openDevTools();
 
   const emberAppLocation = 'serve://dist';
-  mainWindow.loadURL(emberAppLocation);
+  window.loadURL(emberAppLocation);
 
-  mainWindow.webContents.on('did-fail-load', () => {
-    mainWindow.loadURL(emberAppLocation);
+  window.webContents.on('did-fail-load', () => {
+    window.loadURL(emberAppLocation);
   });
 
-  mainWindow.webContents.on('crashed', () => {
+  window.webContents.on('crashed', () => {
     console.log('Your Ember app (or other code) in the main window has crashed.');
     console.log('This is a serious issue that needs to be handled and/or debugged.');
   });
 
-  mainWindow.on('unresponsive', () => {
+  window.on('unresponsive', () => {
     console.log('Your Ember app (or other code) has made the window unresponsive.');
   });
 
-  mainWindow.on('responsive', () => {
+  window.on('responsive', () => {
     console.log('The main window has become responsive again.');
   });
 
-  mainWindow.on('closed', () => {
-    mainWindow = null;
+  window.on('close', (e) => {
+    if(!quit) {
+      e.preventDefault();
+      window.hide();
+    }
+  });
+
+  window.on('closed', () => {
+    window = null;
   });
 });
 
