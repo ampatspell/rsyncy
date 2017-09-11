@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import { Model, byId, settings } from './-base';
 
 export default Model.extend({

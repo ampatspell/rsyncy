@@ -16,7 +16,7 @@ export default Ember.Controller.extend({
       project.save();
     },
     syncProject(project) {
-      this.get('watchers').find(project).sync();
+      project.sync();
     }
   }
 

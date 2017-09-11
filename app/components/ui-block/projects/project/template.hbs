@@ -1,26 +1,24 @@
-{{#with (watcher project) as |watcher|}}
-  <div class="content">
-    <div class="name">{{project.name}}</div>
-    <div class="status">
-        {{#if watcher.isSyncing}}
-          Syncing…
-        {{else}}
-          {{#if project.watch}}
-            Watching…
-          {{else}}
-            Idle
-          {{/if}}
-        {{/if}}
-    </div>
-  </div>
-  <div class="accessory">
-    {{#if watcher.isSyncing}}
-      {{ui-icon 'refresh' class='icon' spin=true}}
-    {{else}}
-      {{#if project.watch}}
+<div class="content">
+  <div class="name">{{project.name}}</div>
+  <div class="status">
+      {{#if project.isSyncing}}
+        Syncing…
       {{else}}
-        {{ui-icon 'refresh' class='icon' action=(action sync)}}
+        {{#if project.watch}}
+          Watching…
+        {{else}}
+          Idle
+        {{/if}}
       {{/if}}
-    {{/if}}
   </div>
-{{/with}}
+</div>
+<div class="accessory">
+  {{#if project.isSyncing}}
+    {{ui-icon 'refresh' class='icon' spin=true}}
+  {{else}}
+    {{#if project.watch}}
+    {{else}}
+      {{ui-icon 'refresh' class='icon' action=(action sync)}}
+    {{/if}}
+  {{/if}}
+</div>

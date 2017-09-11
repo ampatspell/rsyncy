@@ -2,7 +2,7 @@ import ViewModel from './-base';
 import Ember from 'ember';
 
 const {
-  RSVP: { resolve, all },
+  RSVP: { resolve },
   computed
 } = Ember;
 
