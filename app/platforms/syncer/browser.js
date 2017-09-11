@@ -37,6 +37,10 @@ export default Syncer.extend({
   restart() {
     info('restart', this+'');
     this._sync();
+    let watch = this.get('project.watch');
+    if(watch) {
+      this.set('isWatching', true);
+    }
   },
 
   stop() {

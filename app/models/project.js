@@ -2,16 +2,8 @@ import Ember from 'ember';
 import { Model, byId, settings } from './-base';
 
 const {
-  inject: { service },
-  computed,
-  computed: { reads }
+  inject: { service }
 } = Ember;
-
-const syncer = () => {
-  return computed(function() {
-    return this.get('platform').syncer(this);
-  }).readOnly();
-}
 
 export default Model.extend({
 
@@ -24,36 +16,21 @@ export default Model.extend({
   group: byId('groups', 'groupId'),
 
   platform: service(),
-  syncer: syncer(),
-
-  isSyncing: reads('syncer.isSyncing'),
-  isWatching: reads('syncer.isWatching'),
-
-  sync() {
-    this.get('syncer').sync();
-  },
-
-  _start() {
-    this.get('syncer').start();
-  },
 
   didLoad() {
-    return this._start();
+    this.get('platform').didAddProject(this);
   },
 
   didCreate() {
-    return this._start();
+    this.get('platform').didAddProject(this);
   },
 
   didUpdate() {
-    this.get('syncer').restart();
+    this.get('platform').didUpdateProject(this);
   },
 
   willDelete() {
-    let syncer = this.cacheFor('syncer');
-    if(syncer) {
-      syncer.stop();
-    }
+    this.get('platform').didRemoveProject(this);
   }
 
 });

@@ -10,13 +10,6 @@ export default Ember.Controller.extend({
     },
     showGroup(group) {
       this.transitionToRoute('groups.group', group);
-    },
-    updateProjectWatch(project, watch) {
-      project.set('watch', watch);
-      project.save();
-    },
-    syncProject(project) {
-      project.sync();
     }
   }
 
