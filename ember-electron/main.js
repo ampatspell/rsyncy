@@ -26,7 +26,11 @@ const showWindow = () => {
 
 const toggleWindow = () => {
   if(window.isVisible()) {
-    window.hide();
+    if(!window.isFocused()) {
+      window.focus();
+    } else {
+      window.hide();
+    }
   } else {
     showWindow();
   }
@@ -49,10 +53,11 @@ app.on('ready', () => {
   tray.on('double-click', () => showWindow());
 
   tray.on('click', e => {
-    toggleWindow();
-    if(window.isVisible() && process.defaultApp && e.metaKey) {
+    if(window.isVisible() && e.metaKey) {
       window.openDevTools();
+      return;
     }
+    toggleWindow();
   });
 
   Menu.setApplicationMenu(Menu.buildFromTemplate(menu));
