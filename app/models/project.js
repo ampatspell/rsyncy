@@ -18,6 +18,10 @@ export default Model.extend({
     Ember.run.later(() => this.set('isSyncing', false), 3000);
   },
 
+  didCreate() {
+    console.log('didCreate', this+'');
+  },
+
   didUpdate() {
     console.log('didUpdate', this+'');
   },

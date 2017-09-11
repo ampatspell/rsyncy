@@ -45,13 +45,13 @@ export default Ember.Object.extend({
 
   model() {
     let settings = this.get('settings').model();
-    let model = this._createModel({ settings });
+    let model = this._createModel({ settings, isNew: true });
     this.get('models').pushObject(model);
     return model;
   },
 
   _saveModel(model) {
-    model.didUpdate();
+    model._didUpdate();
     return this.get('settings')._saveModel(model);
   },
 

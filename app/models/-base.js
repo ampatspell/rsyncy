@@ -2,7 +2,8 @@ import Ember from 'ember';
 
 const {
   computed,
-  computed: { reads, alias }
+  computed: { reads, alias },
+  RSVP: { resolve }
 } = Ember;
 
 export const byId = (name, key) => {
@@ -59,8 +60,19 @@ export const Model = Ember.Object.extend({
     return this.get('store')._deleteModel(this);
   },
 
+  didCreate() {},
   didUpdate() {},
-  willDelete() {}
+  willDelete() {},
+
+  _didUpdate() {
+    if(this.get('isNew')) {
+      return resolve(this.didCreate()).then(() => {
+        this.set('isNew', false);
+      });
+    } else {
+      return resolve(this.didUpdate());
+    }
+  },
 
 });
 
