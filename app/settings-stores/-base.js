@@ -6,7 +6,7 @@ const {
   computed,
   assign,
   A,
-  RSVP: { resolve },
+  RSVP: { resolve, reject },
   getOwner
 } = Ember;
 
@@ -42,7 +42,7 @@ export default Ember.Object.extend({
   _save(json) {
     let key = this.get('localStorageKey');
     return resolve().then(() => {
-      let string = JSON.stringify(json, null, 2);
+      let string = JSON.stringify(json);
       localStorage.setItem(key, string);
     });
   },
@@ -92,6 +92,18 @@ export default Ember.Object.extend({
 
   save() {
     return this._serialize().then(json => this._save(json));
+  },
+
+  find(id) {
+    return resolve().then(() => {
+      let model = this.get('models').findBy('id', id);
+      if(!model) {
+        let modelName = this.get('modelName');
+        let err = new Ember.Error(`${modelName}:${id} not found`);
+        return reject(err);
+      }
+      return model;
+    });
   }
 
 });
