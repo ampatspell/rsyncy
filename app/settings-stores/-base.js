@@ -1,6 +1,6 @@
 import Ember from 'ember';
-import { array } from 'rsyncy-app/util/computed';
-import makeId from 'rsyncy-app/util/make-id';
+import { array } from 'rsyncy/util/computed';
+import makeId from 'rsyncy/util/make-id';
 
 const {
   computed,

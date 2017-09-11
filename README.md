@@ -1,1 +1,1 @@
-# rsyncy-app
+# rsyncy

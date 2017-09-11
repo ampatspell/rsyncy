@@ -7,7 +7,7 @@ const {
 const isDevelopment = environment === 'development';
 
 export default {
-  name: 'rsyncy-app:development',
+  name: 'rsyncy:development',
   initialize(app) {
     if(!isDevelopment) {
       return;

@@ -1,5 +1,5 @@
 export default {
-  name: 'rsyncy-app:injections',
+  name: 'rsyncy:injections',
   initialize(app) {
     app.inject('route',      'store', 'service:store');
     app.inject('view-model', 'store', 'service:store');

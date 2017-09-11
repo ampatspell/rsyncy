@@ -15,6 +15,6 @@ module.exports = {
   },
   "github_repository": {
     "owner": "ampatspell",
-    "name": "https://github.com/ampatspell/rsyncy-app"
+    "name": "https://github.com/ampatspell/rsyncy"
   },
 };

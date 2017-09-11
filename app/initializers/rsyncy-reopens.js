@@ -1,6 +1,6 @@
 import Ember from 'ember';
-import NavigationRoute from 'rsyncy-app/mixins/navigation-route';
-import ViewModels from 'rsyncy-app/mixins/view-models';
+import NavigationRoute from 'rsyncy/mixins/navigation-route';
+import ViewModels from 'rsyncy/mixins/view-models';
 
 const {
   Resolver,
@@ -22,6 +22,6 @@ Route.reopen(
 );
 
 export default {
-  name: 'rsyncy-app:reopens',
+  name: 'rsyncy:reopens',
   initialize() {}
 };

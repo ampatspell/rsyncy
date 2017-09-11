@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import extend from 'rsyncy-app/util/extend';
+import extend from 'rsyncy/util/extend';
 
 const {
   on

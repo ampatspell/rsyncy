@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import environment from 'rsyncy-app/config/environment';
+import environment from 'rsyncy/config/environment';
 
 const {
   rsyncy: { electron },

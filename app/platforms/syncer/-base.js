@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { array } from 'rsyncy-app/util/computed';
+import { array } from 'rsyncy/util/computed';
 
 const {
   RSVP: { resolve, reject },

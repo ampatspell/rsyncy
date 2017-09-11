@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import props from 'rsyncy-app/util/lookup-computed-properties';
+import props from 'rsyncy/util/lookup-computed-properties';
 
 const {
   inject: { service },

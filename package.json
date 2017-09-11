@@ -1,8 +1,8 @@
 {
-  "name": "rsyncy-app",
+  "name": "rsyncy",
   "version": "0.0.3",
   "private": true,
-  "description": "Small description for rsyncy-app goes here",
+  "description": "rsyncy makes my laptop faster",
   "license": "MIT",
   "author": "",
   "directories": {
