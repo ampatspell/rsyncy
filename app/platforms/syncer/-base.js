@@ -82,6 +82,10 @@ export default Ember.Object.extend({
       .then(() => this.set('isWatching', false));
   }),
 
+  _onChange(changes) {
+    return this._syncChangesTask(changes);
+  },
+
   // public
 
   start: error(function() {
