@@ -12,7 +12,6 @@ export default Ember.Object.extend({
   syncers: array(),
 
   _createSyncer(project) {
-    console.log('create', project+'');
     let name = this.get('name');
     let platform = this;
     return getOwner(this).factoryFor(`platform:syncer/${name}`).create({ platform, project });
