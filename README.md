@@ -2,7 +2,7 @@
 
 Rsyncy is OSX app which synces locally changed files to some remote location. It is done by watching with `watchdog` and `rsync`.
 
-![Navigation bar](https://raw.githubusercontent.com/ampatspell/rsyncy/master/doc/images/navbar.png)
+![Menubar](https://raw.githubusercontent.com/ampatspell/rsyncy/master/doc/images/menubar.png)
 
 ![Rsyncy.app](https://raw.githubusercontent.com/ampatspell/rsyncy/master/doc/images/index.png)
 
