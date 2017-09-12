@@ -1,0 +1,14 @@
+{{#ui-block/form changeset=changeset as |form|}}
+  {{#form.row as |row|}}
+    {{#row.value title='Rsyncy.app' property='version' as |version|}}
+      v{{version}}
+    {{/row.value}}
+  {{/form.row}}
+  {{#form.row as |row|}}
+    {{#row.value title='PATH' property='path' class='small' as |model|}}
+      {{#each model as |value|}}
+        <div>{{value}}</div>
+      {{/each}}
+    {{/row.value}}
+  {{/form.row}}
+{{/ui-block/form}}

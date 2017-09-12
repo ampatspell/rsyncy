@@ -1,6 +1,7 @@
 /* eslint-env node */
 'use strict';
 
+const { version } = require('../package.json');
 const electron = !!process.env.EMBER_CLI_ELECTRON;
 
 module.exports = function(environment) {
@@ -14,7 +15,8 @@ module.exports = function(environment) {
     APP: {
     },
     rsyncy: {
-      electron
+      electron,
+      version
     }
   };
 
