@@ -5,12 +5,12 @@ module.exports = {
     ],
   },
   "electronPackagerConfig": {
-    name: 'rsyncy',
+    name: 'Rsyncy',
     versionString: {
       CompanyName: 'ampatspell',
-      FileDescription: 'rsyncy for desktop',
-      ProductName: 'rsyncy',
-      InternalName: 'rsyncy'
+      FileDescription: 'Rsyncy for OSX',
+      ProductName: 'Rsyncy',
+      InternalName: 'Rsyncy'
     }
   },
   "github_repository": {
