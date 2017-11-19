@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import Platform from './-base';
 
-/* global requireNode */
+/* global requireNode process */
 
 const {
   on,
