@@ -2,10 +2,6 @@
   padding: 10px 15px;
   border-bottom: 1px solid rgba(0,0,0,0);
   border-top: 1px solid rgba(0,0,0,0);
-  &:hover {
-    background: fade-out(#000, 0.97);
-    border-color: fade-out(#000, 0.95);
-  }
   display: flex;
   align-items: center;
   > .content {
@@ -30,6 +26,20 @@
     padding-left: 14px;
     > .icon {
       font-size: 18px;
+      &.optional {
+        opacity: 0;
+      }
+    }
+  }
+  &:hover {
+    background: fade-out(#000, 0.97);
+    border-color: fade-out(#000, 0.95);
+    > .accessory {
+      > .icon {
+        &.optional {
+          opacity: 1;
+        }
+      }
     }
   }
 }

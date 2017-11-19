@@ -19,6 +19,8 @@ export const error = fn => {
   }
 }
 
+const pluralize = (count, one, many) => count === 1 ? one : many;
+
 export default Ember.Object.extend({
 
   platform: null,
@@ -27,6 +29,7 @@ export default Ember.Object.extend({
   isSyncing: false,
   isWatching: false,
   isStopped: false,
+  isSynced: false,
   message: null,
   error: null,
 
@@ -55,13 +58,15 @@ export default Ember.Object.extend({
     return resolve()
       .then(() => this.setProperties({ isSyncing: true, message: 'Syncing…' }))
       .then(() => this.__syncAll())
-      .then(message => this.set('message', message))
+      .then(message => this.setProperties({ message, isSynced: true }))
       .finally(() => this.set('isSyncing', false));
   }),
 
   _syncChangesTask: task(function(changes) {
+    let count = changes.length;
+    let message = `Syncing ${count} changed ${pluralize(count, 'file', 'files')}…`;
     return resolve()
-      .then(() => this.setProperties({ isSyncing: true, message: 'Syncing…' }))
+      .then(() => this.setProperties({ isSyncing: true, message }))
       .then(() => this.__syncChanges(changes))
       .then(message => this.set('message', message))
       .finally(() => this.set('isSyncing', false));
@@ -92,14 +97,17 @@ export default Ember.Object.extend({
   }),
 
   _onChange(changes) {
-    return this._syncChangesTask(changes);
+    if(this.get('isSynced')) {
+      return this._syncChangesTask(changes);
+    } else {
+      return this._syncAllTask();
+    }
   },
 
   // public
 
   start: error(function() {
     return resolve()
-      .then(() => this._syncAllTask())
       .then(() => this._watchTask())
       .then(() => this);
   }),
