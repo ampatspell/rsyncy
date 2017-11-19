@@ -16,9 +16,6 @@
   {{#if syncer.isSyncing}}
     {{ui-icon 'refresh' class='icon' spin=true}}
   {{else}}
-    {{#if syncer.isWatching}}
-    {{else}}
-      {{ui-icon 'refresh' class='icon' action=(action 'sync')}}
-    {{/if}}
+    {{ui-icon 'refresh' class='icon optional' action=(action 'sync')}}
   {{/if}}
 </div>
